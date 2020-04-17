@@ -83,4 +83,23 @@ public class Item {
     public boolean isRare() {
         return rare;
     }
+
+    public void pickUp(IGameEngine gameEngine, Health health) {
+        // Don't pick up items that give health, just consume them.
+        if (getHeal() > 0) {
+            health.heal(getHeal());
+
+            if (getHeal() > 500) {
+                gameEngine.playSpecialEffect("green_swirly");
+            }
+
+        }
+        
+        else if (isRare() && isUnique()) {
+            gameEngine.playSpecialEffect("blue_swirly");
+        }
+
+        else if (isRare())
+            gameEngine.playSpecialEffect("cool_swirly_particles");
+    }
 }
